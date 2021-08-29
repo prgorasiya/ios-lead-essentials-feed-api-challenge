@@ -22,7 +22,9 @@ public final class RemoteFeedLoader: FeedLoader {
 		client.get(from: url) { result in
 			switch result {
 			case let .success((data, _)):
-				if let root = try? JSONDecoder().decode(Root.self, from: data) {
+				let jsonDecoder = JSONDecoder()
+				jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+				if let root = try? jsonDecoder.decode(Root.self, from: data) {
 					completion(.success(root.items.map({ $0.item })))
 				} else {
 					completion(.failure(RemoteFeedLoader.Error.invalidData))
