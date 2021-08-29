@@ -23,12 +23,12 @@ public final class RemoteFeedLoader: FeedLoader {
 			switch result {
 			case let .success((data, response)):
 				guard response.statusCode == 200, let images = try? RemoteFeedImageMapper.feedImages(from: data) else {
-					completion(.failure(RemoteFeedLoader.Error.invalidData))
+					completion(.failure(Error.invalidData))
 					return
 				}
 				completion(.success(images))
 			case .failure(_):
-				completion(.failure(RemoteFeedLoader.Error.connectivity))
+				completion(.failure(Error.connectivity))
 			}
 		}
 	}
