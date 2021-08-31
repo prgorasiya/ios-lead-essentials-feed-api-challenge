@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RemoteFeedImageMapper {
+enum RemoteFeedImageMapper {
 	private struct Root: Decodable {
 		let items: [Item]
 	}
