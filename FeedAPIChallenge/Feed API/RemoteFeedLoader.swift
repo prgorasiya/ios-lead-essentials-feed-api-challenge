@@ -21,7 +21,7 @@ public final class RemoteFeedLoader: FeedLoader {
 	public func load(completion: @escaping (FeedLoader.Result) -> Void) {
 		client.get(from: url) { [weak self] result in
 			guard self != nil else { return }
-			
+
 			switch result {
 			case let .success((data, response)):
 				guard response.statusCode == 200, let images = try? RemoteFeedImageMapper.feedImages(from: data) else {
@@ -29,7 +29,7 @@ public final class RemoteFeedLoader: FeedLoader {
 					return
 				}
 				completion(.success(images))
-			case .failure(_):
+			case .failure:
 				completion(.failure(Error.connectivity))
 			}
 		}
